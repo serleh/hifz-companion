@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class AudioConsumer:
     def __init__(self, buffer):
         self.buffer = buffer
@@ -15,3 +14,13 @@ class AudioConsumer:
             return np.array([])
 
         return np.concatenate(chunks, axis=0)
+
+    def get_recent_audio(self, window_size):
+        chunks = self.buffer.get()
+
+        recent_chunks = chunks[-window_size:]
+
+        if not recent_chunks:
+            return np.array([])
+
+        return np.concatenate(recent_chunks, axis=0)
