@@ -1,8 +1,18 @@
+import time
+
+
 class LiveWhisper:
-    def __init__(self, audio_consumer, whisper_processor, window_size):
+    def __init__(
+        self,
+        audio_consumer,
+        whisper_processor,
+        window_size,
+        processing_interval,
+    ):
         self.audio_consumer = audio_consumer
         self.whisper_processor = whisper_processor
         self.window_size = window_size
+        self.processing_interval = processing_interval
         self.running = False
 
     def transcribe_latest(self):
@@ -28,4 +38,5 @@ class LiveWhisper:
         while self.running:
             self.process_once()
 
-
+            if self.running:
+                time.sleep(self.processing_interval)
